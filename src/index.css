@@ -76,3 +76,8 @@ main{
   top: 16px;
   right: -6px;
 }
+
+.error{
+  color: rgb(218, 25, 25);
+  font-size: 12px;
+}
