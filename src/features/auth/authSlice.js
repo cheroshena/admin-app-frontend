@@ -2,10 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
 
-const getUserfromLocalStorage = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+const getUserfromLocalStorage = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
 
 const initialState = {
     user: getUserfromLocalStorage,
+    orders: [],
+    channels:[],
     isError: false,
     isLoading: false,
     isSuccess: false,
@@ -22,6 +26,28 @@ export const login = createAsyncThunk(
             return thunkAPI.rejectWithValue(error);
         }
     });
+
+export const getOrders = createAsyncThunk(
+    "order/get-orders",
+    async (thunkAPI) => {
+        try {
+            return await authService.getOrders();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const getChannels = createAsyncThunk(
+    "channel/get-channels",
+    async (thunkAPI) => {
+        try {
+            return await authService.getChannels();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 
 export const authSlice = createSlice({
     name: "auth",
@@ -40,6 +66,38 @@ export const authSlice = createSlice({
                 state.message = "success";
             })
             .addCase(login.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(getOrders.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getOrders.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.orders = action.payload;
+                state.message = "success";
+            })
+            .addCase(getOrders.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(getChannels.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getChannels.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.channels = action.payload;
+                state.message = "success";
+            })
+            .addCase(getChannels.rejected, (state, action) => {
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
