@@ -21,7 +21,7 @@ const columns = [
   },
   {
     title: " Specialize",
-    dataIndex: "qulification",
+    dataIndex: "specialize",
   },
   {
     title: "Time Duration",
@@ -29,11 +29,11 @@ const columns = [
   },
   {
     title: "Description",
-    dataIndex: "description",
+    dataIndex: "discription",
   },
   {
     title: "Experience",
-    dataIndex: "experience",
+    dataIndex: "expirience",
   },
   {
     title: "Rating",
@@ -59,12 +59,12 @@ const Doctorlist = () => {
     data1.push({
       key: i + 1,
       name: doctorState[i].name,
-      qulification: doctorState[i].qulification,
-      timeduration: doctorState[i].timeduration,
-      doctotalrating: doctorState[i].doctotalrating,
-      experience: doctorState[i].experience,
-      description: doctorState[i].description,
       regno: doctorState[i].regno,
+      specialize: doctorState[i].specialize,
+      timeduration: doctorState[i].timeduration,
+      discription: doctorState[i].discription,
+      expirience: doctorState[i].expirience,
+      doctotalrating: doctorState[i].doctotalrating,
       action: (
         <>
           <Link className="fs-3 text-success" to="/">
