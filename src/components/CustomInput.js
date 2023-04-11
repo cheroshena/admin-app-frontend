@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const CustomInput = (props) => {
     const { type, label, i_id, i_class, name, val, onChng, onBlr } = props;
@@ -19,4 +19,4 @@ const CustomInput = (props) => {
     );
 };
 
-export default CustomInput
+export default CustomInput;
