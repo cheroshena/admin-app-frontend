@@ -22,10 +22,7 @@ const columns = [
         title: "Category",
         dataIndex: "category",
     },
-    {
-        title: "Colors",
-        dataIndex: "color",
-    },
+    
     {
         title: "Rating",
         dataIndex: "totalrating",
@@ -68,7 +65,7 @@ const Productlist = () => {
             quantity: productState[i].quantity,
             brand: productState[i].brand,
             category: productState[i].category,
-            color: productState[i].color,
+            
             action: (
                 <>
                     <Link className="fs-3 text-success" to="/">

@@ -1,71 +1,73 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import specializeService from "./specializeService";
+import uploadService from "./uploadService";
 
-
-
-export const getSpecializes = createAsyncThunk(
-    "specialize/get-specializes",
-    async (thunkAPI) => {
+export const uploadImg = createAsyncThunk(
+    "upload/images",
+    async (data, thunkAPI) => {
         try {
-            return await specializeService.getSpecializes();
+            const formData = new FormData();
+            for (let i = 0; i < data.length; i++) {
+                formData.append("images", data[i]);
+            }
+            return await uploadService.uploadImg(formData);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
     }
 );
-export const createSpecialize = createAsyncThunk(
-    "specialize/create-specialize",
-    async (specializeData, thunkAPI) => {
+export const delImg = createAsyncThunk(
+    "delete/images",
+    async (id, thunkAPI) => {
         try {
-            return await specializeService.createSpecialize(specializeData);
+            return await uploadService.deleteImg(id);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
     }
 );
 const initialState = {
-    specializes: [],
+    images: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: "",
 };
-export const specializeSlice = createSlice({
-    name: "specializes",
+export const uploadSlice = createSlice({
+    name: "imaegs",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getSpecializes.pending, (state) => {
+            .addCase(uploadImg.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getSpecializes.fulfilled, (state, action) => {
+            .addCase(uploadImg.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.specializes = action.payload;
+                state.images = action.payload;
             })
-            .addCase(getSpecializes.rejected, (state, action) => {
+            .addCase(uploadImg.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
             })
-            .addCase(createSpecialize.pending, (state) => {
+            .addCase(delImg.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(createSpecialize.fulfilled, (state, action) => {
+            .addCase(delImg.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.createdSpecialize = action.payload;
+                state.images = [];
             })
-            .addCase(createSpecialize.rejected, (state, action) => {
+            .addCase(delImg.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
-                state.message = action.error;
+                state.message = action.payload;
             });
     },
 });
-export default specializeSlice.reducer;
+export default uploadSlice.reducer;
