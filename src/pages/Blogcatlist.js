@@ -4,37 +4,38 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import { getBcategorys } from '../features/bcategory/bcategorySlice';
+import { getCategories } from '../features/bcategory/bcategorySlice';
+
 
 const columns = [
-  {
-    title: "SNo",
-    dataIndex: "key",
-  },
-  {
-    title: " Title",
-    dataIndex: "title",
-  },
-  {
-    title: " Action",
-    dataIndex: "action",
-  },
+    {
+      title: "SNo",
+      dataIndex: "key",
+    },
+    {
+      title: " Category Name",
+      dataIndex: "title",
+    },
+    {
+      title: " Action",
+      dataIndex: "action",
+    },
+  ];
 
-];
 
 
 const Blogcatlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
 
-    dispatch(getBcategorys());
+    dispatch(getCategories());
   }, []);
-  const bcategoryState = useSelector((state) => state.bcategory.bcategorys);
+  const bCatState = useSelector((state) => state.bCategory.bCategories);
   const data1 = [];
-  for (let i = 0; i < bcategoryState.length; i++) {
+  for (let i = 0; i < bCatState.length; i++) {
     data1.push({
       key: i + 1,
-      title: bcategoryState[i].title,
+      title: bCatState[i].title,
       action: (
         <>
           <Link className="fs-3 text-success" to="/">

@@ -1,46 +1,71 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import bcategoryService from "./bcategoryService";
+import bCategoryService from "./bcategoryService";
 
-
-
-export const getBcategorys = createAsyncThunk(
-  "bcategory/get-bcategorys",
-  async (thunkAPI) => {
-    try {
-      return await bcategoryService.getBcategorys();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+export const getCategories = createAsyncThunk(
+    "blogCategory/get-categories",
+    async (thunkAPI) => {
+        try {
+            return await bCategoryService.getBlogCategories();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
     }
-  }
 );
+
+export const createNewBlogCat = createAsyncThunk(
+    "blogCategory/create-category",
+    async (catData, thunkAPI) => {
+      try {
+        return await bCategoryService.createBlogCategory(catData);
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  );
+
 const initialState = {
-  bcategorys: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
+    bCategories: [],
+    isError: false,
+    isLoading: false,
+    isSuccess: false,
+    message: "",
 };
-export const bcategorySlice = createSlice({
-  name: "bcategorys",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(getBcategorys.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getBcategorys.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.bcategorys = action.payload;
-      })
-      .addCase(getBcategorys.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.error;
-      });
-  },
+export const pCategorySlice = createSlice({
+    name: "bCategories",
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getCategories.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getCategories.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.bCategories = action.payload;
+            })
+            .addCase(getCategories.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(createNewBlogCat.pending, (state) => {
+                state.isLoading = true;
+              })
+              .addCase(createNewBlogCat.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.createBlogCategory = action.payload;
+              })
+              .addCase(createNewBlogCat.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+              });
+    },
 });
-export default bcategorySlice.reducer;
+export default pCategorySlice.reducer;

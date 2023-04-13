@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from 'react-redux';
 import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/pcategory/pcategorySlice';
-
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
 import { createProducts } from '../features/product/productSlice';
@@ -23,7 +22,6 @@ let schema = yup.object().shape({
     brand: yup.string().required("Brand is Required"),
     category: yup.string().required("Category is Required"),
     tags: yup.string().required("Tag is Required"),
-    
     quantity: yup.number().required("Quantity is Required"),
 
 });

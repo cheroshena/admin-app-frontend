@@ -8,9 +8,9 @@ import pCategoryReducer from "../features/pcategory/pcategorySlice";
 import colorReducer from "../features/color/colorSlice";
 import specializeReducer from "../features/specialize/specializeSlice";
 import blogReducer from "../features/blogs/blogSlice";
-import bcategoryReducer from "../features/bcategory/bcategorySlice";
 import enquiryReducer from "../features/enquiry/enquirySlice";
 import uploadReducer from "../features/upload/uploadSlice";
+import bCategoryReducer from "../features/bcategory/bcategorySlice";
 
 
 
@@ -25,9 +25,9 @@ export const store = configureStore({
         color: colorReducer,
         specialize: specializeReducer,
         blog:blogReducer,
-        bcategory: bcategoryReducer,
         enquiry:enquiryReducer,
         upload:uploadReducer,
+        bCategory:bCategoryReducer,
     },
 
 });
