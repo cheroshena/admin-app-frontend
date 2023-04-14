@@ -27,6 +27,9 @@ import { Addspecialize } from './pages/Addspecialize';
 import Addproduct from './pages/Addproduct';
 import Adddoctor from './pages/Adddoctor';
 
+import AddCoupon from './pages/AddCoupon';
+import Couponlist from './pages/Couponlist';
+
 function App() {
   return (
     <Router>
@@ -41,6 +44,8 @@ function App() {
           <Route path='prescription' element={<Prescription/>} />
           <Route path='blog-list' element={<Bloglist/>} />
           <Route path='blog' element={<Addblog/>} />
+          <Route path='coupon-list' element={<Couponlist/>} />
+          <Route path='coupon' element={<AddCoupon/>} />
           <Route path='blog-category-list' element={<Blogcatlist/>} />
           <Route path='blog-category' element={<Addblogcat/>} />
           <Route path='orders' element={<Orders/>} />
