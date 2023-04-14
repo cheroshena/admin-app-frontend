@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import specializeService from "./specializeService";
 
 
@@ -13,6 +13,9 @@ export const getSpecializes = createAsyncThunk(
         }
     }
 );
+
+export const resetState = createAction("Reset_all");
+
 export const createSpecialize = createAsyncThunk(
     "specialize/create-specialize",
     async (specializeData, thunkAPI) => {
@@ -65,7 +68,8 @@ export const specializeSlice = createSlice({
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
-            });
+            })
+            .addCase(resetState, () => initialState);
     },
 });
 export default specializeSlice.reducer;

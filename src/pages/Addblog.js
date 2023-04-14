@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from "../features/bcategory/bcategorySlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createBlogs } from "../features/blogs/blogSlice";
+import { createBlogs, resetState } from "../features/blogs/blogSlice";
 
 
 
@@ -33,10 +33,10 @@ const Addblog = () => {
     }, []);
 
 
-    const blogState = useSelector((state) => state.blogs);
+    const blogState = useSelector((state) => state.blog);
     const imgState = useSelector((state) => state.upload.images);
     const bCatState = useSelector((state) => state.bCategory.bCategories)
-    const { isSuccess, isError, isLoading, createdBlog } = blogState || {};
+    const { isSuccess, isError, isLoading, createdBlog } = blogState;
     useEffect(() => {
         if (isSuccess && createdBlog) {
             toast.success("Blog Added Successfullly!");
@@ -75,6 +75,7 @@ const Addblog = () => {
             formik.resetForm();
 
             setTimeout(() => {
+                dispatch(resetState());
                 navigate("/admin/blog-list");
             }, 3000);
         },

@@ -11,7 +11,7 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/pcategory/pcategorySlice';
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts } from '../features/product/productSlice';
+import { createProducts, resetState } from '../features/product/productSlice';
 import { Select } from "antd";
 
 
@@ -87,6 +87,7 @@ const Addproduct = () => {
             formik.resetForm();
             
             setTimeout(() => {
+                dispatch(resetState());
                 navigate("/admin/list-product");
               }, 3000);
         },

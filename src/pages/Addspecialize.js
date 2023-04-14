@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { createSpecialize } from '../features/specialize/specializeSlice';
+import { createSpecialize, resetState } from '../features/specialize/specializeSlice';
 
 let schema = yup.object().shape({
     title: yup.string().required("Specialize is Required"),
@@ -36,6 +36,7 @@ export const Addspecialize = () => {
             formik.resetForm();
 
             setTimeout(() => {
+                dispatch(resetState());
                 navigate("/admin/list-docbrand");
             }, 3000);
         },

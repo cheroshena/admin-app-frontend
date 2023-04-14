@@ -1,71 +1,74 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bCategoryService from "./bcategoryService";
 
 export const getCategories = createAsyncThunk(
-    "blogCategory/get-categories",
-    async (thunkAPI) => {
-        try {
-            return await bCategoryService.getBlogCategories();
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error);
-        }
+  "blogCategory/get-categories",
+  async (thunkAPI) => {
+    try {
+      return await bCategoryService.getBlogCategories();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
+  }
 );
 
 export const createNewBlogCat = createAsyncThunk(
-    "blogCategory/create-category",
-    async (catData, thunkAPI) => {
-      try {
-        return await bCategoryService.createBlogCategory(catData);
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error);
-      }
+  "blogCategory/create-category",
+  async (catData, thunkAPI) => {
+    try {
+      return await bCategoryService.createBlogCategory(catData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
-  );
+  }
+);
+
+export const resetState = createAction("Reset_all");
 
 const initialState = {
-    bCategories: [],
-    isError: false,
-    isLoading: false,
-    isSuccess: false,
-    message: "",
+  bCategories: [],
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
 };
 export const pCategorySlice = createSlice({
-    name: "bCategories",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(getCategories.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(getCategories.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isError = false;
-                state.isSuccess = true;
-                state.bCategories = action.payload;
-            })
-            .addCase(getCategories.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.isSuccess = false;
-                state.message = action.error;
-            })
-            .addCase(createNewBlogCat.pending, (state) => {
-                state.isLoading = true;
-              })
-              .addCase(createNewBlogCat.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isError = false;
-                state.isSuccess = true;
-                state.createBlogCategory = action.payload;
-              })
-              .addCase(createNewBlogCat.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.isSuccess = false;
-                state.message = action.error;
-              });
-    },
+  name: "bCategories",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCategories.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.bCategories = action.payload;
+      })
+      .addCase(getCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(createNewBlogCat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewBlogCat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.createBlogCategory = action.payload;
+      })
+      .addCase(createNewBlogCat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(resetState, () => initialState);
+  },
 });
 export default pCategorySlice.reducer;
