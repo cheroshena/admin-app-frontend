@@ -149,7 +149,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.deletge = action.error;
+        state.message = action.error;
       })
       .addCase(resetState, () => initialState);
   },

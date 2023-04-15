@@ -56,6 +56,7 @@ function App() {
           <Route path='doctor' element={<Adddoctor/>} />
           <Route path='list-docbrand' element={<Specializelist/>} />
           <Route path='docbrand' element={<Addspecialize/>} />
+          <Route path='docbrand/:id' element={<Addspecialize/>} />
           <Route path='list-category' element={<Categorylist/>}/>
           <Route path='category' element={<Addcat/>}/>
           <Route path='category/:id' element={<Addcat/>}/>
