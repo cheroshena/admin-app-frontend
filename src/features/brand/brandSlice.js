@@ -13,24 +13,24 @@ export const getBrands = createAsyncThunk(
   }
 );
 
-//Get A Brand
-export const getABrand = createAsyncThunk(
-  "brand/get-brand",
-  async (id, thunkAPI) => {
-    try {
-      return await brandService.getBrand(id);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 //Create A Brand
 export const createBrand = createAsyncThunk(
   "brand/create-brand",
   async (brandData, thunkAPI) => {
     try {
       return await brandService.createBrand(brandData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//Get A Brand
+export const getABrand = createAsyncThunk(
+  "brand/get-brand",
+  async (id, thunkAPI) => {
+    try {
+      return await brandService.getBrand(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -49,6 +49,7 @@ export const updateABrand = createAsyncThunk(
   }
 );
 
+//Delete A Brand
 export const deleteABrand = createAsyncThunk(
   "brand/delete-brand",
   async (id, thunkAPI) => {
