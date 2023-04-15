@@ -4,8 +4,8 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCoupon } from "../features/coupon/couponSlice";
-
+import { getAllCoupon, deleteACoupon, resetState } from "../features/coupon/couponSlice";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -42,9 +42,12 @@ const Couponlist = () => {
     setcouponId(e);
   };
 
-
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getAllCoupon());
   }, []);
   const couponState = useSelector((state) => state.coupon.coupons);
@@ -73,14 +76,30 @@ const Couponlist = () => {
       ),
     });
   }
-  
+  const deleteCoupon = (e) => {
+    dispatch(deleteACoupon(e));
+
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getAllCoupon());
+    }, 100);
+  };
+
   return (
     <div>
-            <h3 className="mb-4 title">Coupon List</h3>
-            <div>
-                <Table columns={columns} dataSource={data1} />
-            </div>
-        </div>
+      <h3 className="mb-4 title">Coupons</h3>
+      <div>
+        <Table columns={columns} dataSource={data1} />
+      </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteCoupon(couponId);
+        }}
+        title="Are you sure you want to delete this Coupon?"
+      />
+    </div>
   )
 };
 
