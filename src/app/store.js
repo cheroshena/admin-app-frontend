@@ -5,7 +5,7 @@ import productReducer from "../features/product/productSlice";
 import brandReducer from "../features/brand/brandSlice";
 import doctorReducer from "../features/doctor/doctorSlice";
 import pCategoryReducer from "../features/pcategory/pcategorySlice";
-import colorReducer from "../features/color/colorSlice";
+
 import specializeReducer from "../features/specialize/specializeSlice";
 import blogReducer from "../features/blogs/blogSlice";
 import enquiryReducer from "../features/enquiry/enquirySlice";
@@ -23,7 +23,6 @@ export const store = configureStore({
         brand: brandReducer,
         doctor: doctorReducer,
         pCategory: pCategoryReducer,
-        color: colorReducer,
         specialize: specializeReducer,
         blog:blogReducer,
         enquiry:enquiryReducer,

@@ -4,7 +4,6 @@ import {
   AiOutlineDashboard,
   AiOutlineShoppingCart,
   AiOutlineUser,
-  AiOutlineBgColors,
 } from "react-icons/ai";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -89,17 +88,8 @@ const MainLayout = () => {
                   key: "list-category",
                   icon: <BiCategoryAlt className="fs-4" />,
                   label: "Category List",
-                },
-                {
-                  key: "color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color",
-                },
-                {
-                  key: "list-color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color List",
-                },
+                }
+                
               ],
             },
             {
