@@ -49,7 +49,7 @@ const ViewEnq = () => {
                 <div className="d-flex align-items-center gap-3">
                     <h6 className="mb-0">Mobile:</h6>
                     <p className="mb-0">
-                        <a href={`tel:+91${enqMobile}`}>{enqMobile}</a>
+                        <a href={`tel:+94${enqMobile}`}>{enqMobile}</a>
                     </p>
                 </div>
                 <div className="d-flex align-items-center gap-3">
