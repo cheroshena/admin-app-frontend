@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CustomInput from "../components/CustomInput";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from "../features/bcategory/bcategorySlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createBlogs, resetState } from "../features/blogs/blogSlice";
+import { createBlogs, getABlog, resetState, updateABlog } from "../features/blogs/blogSlice";
 
 
 
@@ -25,10 +25,14 @@ let schema = yup.object().shape({
 const Addblog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const getBlogId = location.pathname.split("/")[3];
     const [images, setImages] = useState([]);
 
-    useEffect(() => {
+    
 
+    useEffect(() => {
+        dispatch(resetState());
         dispatch(getCategories());
     }, []);
 
@@ -36,10 +40,25 @@ const Addblog = () => {
     const blogState = useSelector((state) => state.blog);
     const imgState = useSelector((state) => state.upload.images);
     const bCatState = useSelector((state) => state.bCategory.bCategories)
-    const { isSuccess, isError, isLoading, createdBlog } = blogState;
+    const { isSuccess, isError, isLoading, createdBlog, blogName, blogDesc, blogCategory, blogImages, updatedBlog } = blogState;
+
+    useEffect(() => {
+        if (getBlogId !== undefined) {
+            dispatch(getABlog(getBlogId));
+img.push(blogImages)
+
+        } else {
+            dispatch(resetState());
+        }
+    }, [getBlogId]);
+
     useEffect(() => {
         if (isSuccess && createdBlog) {
             toast.success("Blog Added Successfullly!");
+        }
+        if (isSuccess && updatedBlog) {
+            toast.success("Blog Updated Successfully!")
+            navigate("/admin/blog-list")
         }
         if (isError) {
             toast.error("Something Went Wrong!");
@@ -59,25 +78,32 @@ const Addblog = () => {
     useEffect(() => {
 
         formik.values.images = img;
-    }, [img])
+    }, [blogImages])
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            title: "",
-            description: "",
-            category: "",
+            title: blogName || "",
+            description: blogDesc || "",
+            category: blogCategory || "",
             images: "",
         },
         validationSchema: schema,
         onSubmit: (values) => {
-
-            dispatch(createBlogs(values));
-            formik.resetForm();
-
-            setTimeout(() => {
+            if (getBlogId !== undefined) {
+                const data = { id: getBlogId, blogData: values }
+                dispatch(updateABlog(data));
                 dispatch(resetState());
-                navigate("/admin/blog-list");
-            }, 3000);
+
+            } else {
+                dispatch(createBlogs(values));
+                formik.resetForm();
+
+                setTimeout(() => {
+                    dispatch(resetState());
+                    navigate("/admin/blog-list");
+                }, 300);
+            }
         },
     });
 
@@ -87,7 +113,7 @@ const Addblog = () => {
     };
     return (
         <div>
-            <h3 className="mb-4 title">Add Blog</h3>
+            <h3 className="mb-4 title">{getBlogId !== undefined ? "Edit" : "Add"} Blog</h3>
             <div className="">
                 <form onSubmit={formik.handleSubmit} className="d-flex gap-3 flex-column">
 
@@ -172,7 +198,7 @@ const Addblog = () => {
                         className="btn btn-success border-0 rounded-3 my-5"
                         type="submit"
                     >
-                        Add Blog
+                        {getBlogId !== undefined ? "Edit" : "Add"} Blog
                     </button>
                 </form>
             </div>

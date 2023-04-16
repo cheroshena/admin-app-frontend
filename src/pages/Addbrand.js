@@ -98,4 +98,4 @@ const Addbrand = () => {
     )
 }
 
-export default Addbrand
+export default Addbrand;

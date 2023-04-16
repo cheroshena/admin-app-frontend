@@ -140,7 +140,7 @@ export const brandSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(deleteABrand.fulfilled, (state, action) => {
-        state.deletding = false;
+        state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.deletedBrand = action.payload;

@@ -12,7 +12,6 @@ import Bloglist from './pages/Bloglist';
 import Blogcatlist from './pages/Blogcatlist';
 import Orders from './pages/Orders';
 import Customers from './pages/Customers';
-
 import Doctorlist from './pages/Doctorlist';
 import Specializelist from './pages/Specializelist';
 import Categorylist from './pages/Categorylist';
@@ -20,13 +19,11 @@ import Brandlist from './pages/Brandlist';
 import Productlist from './pages/Productlist';
 import Addblog from './pages/Addblog';
 import Addblogcat from './pages/Addblogcat';
-
 import Addcat from './pages/Addcat';
 import Addbrand from './pages/Addbrand';
 import { Addspecialize } from './pages/Addspecialize';
 import Addproduct from './pages/Addproduct';
 import Adddoctor from './pages/Adddoctor';
-
 import AddCoupon from './pages/AddCoupon';
 import Couponlist from './pages/Couponlist';
 
@@ -44,14 +41,15 @@ function App() {
           <Route path='prescription' element={<Prescription/>} />
           <Route path='blog-list' element={<Bloglist/>} />
           <Route path='blog' element={<Addblog/>} />
+          <Route path='blog/:id' element={<Addblog/>} />
           <Route path='coupon-list' element={<Couponlist/>} />
           <Route path='coupon' element={<AddCoupon/>} />
           <Route path='coupon/:id' element={<AddCoupon/>} />
           <Route path='blog-category-list' element={<Blogcatlist/>} />
           <Route path='blog-category' element={<Addblogcat/>} />
+          <Route path='blog-category/:id' element={<Addblogcat/>} />
           <Route path='orders' element={<Orders/>} />
           <Route path='customers' element={<Customers/>} />
-          
           <Route path='list-doctor' element={<Doctorlist/>} />
           <Route path='doctor' element={<Adddoctor/>} />
           <Route path='list-docbrand' element={<Specializelist/>} />

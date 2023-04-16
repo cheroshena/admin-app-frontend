@@ -90,4 +90,4 @@ const Brandlist = () => {
     );
 }
 
-export default Brandlist
+export default Brandlist;
