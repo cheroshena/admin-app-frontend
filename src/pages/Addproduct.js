@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CustomInput from "../components/CustomInput";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from "react-toastify";
@@ -11,8 +11,8 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/pcategory/pcategorySlice';
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts, resetState } from '../features/product/productSlice';
-import { Select } from "antd";
+import { createProducts, getAProduct, resetState, updateAProduct } from '../features/product/productSlice';
+
 
 
 let schema = yup.object().shape({
@@ -29,32 +29,61 @@ let schema = yup.object().shape({
 const Addproduct = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+    const location = useLocation();
+    const getProductId = location.pathname.split("/")[3];
     const [images, setImages] = useState([]);
-    
+
     useEffect(() => {
+        dispatch(resetState());
         dispatch(getBrands());
         dispatch(getCategories());
-        
+
 
     }, []);
 
     const brandState = useSelector((state) => state.brand.brands);
     const catState = useSelector((state) => state.pCategory.pCategories);
-    
     const imgState = useSelector((state) => state.upload.images);
     const newProduct = useSelector((state) => state.product);
-    const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+    const {
+        isSuccess,
+        isError,
+        isLoading,
+        createdProduct,
+        productImages,
+        productName,
+        productDescription,
+        productPrice,
+        productBrand,
+        productCategory,
+        productsTaags,
+        productQuantity,
+        updatedProduct,
+    } = newProduct;
+
+    useEffect(() => {
+        if (getProductId !== undefined) {
+            dispatch(getAProduct(getProductId));
+            img.push(productImages)
+        } else {
+            dispatch(resetState());
+        }
+    }, [getProductId])
+
     useEffect(() => {
         if (isSuccess && createdProduct) {
             toast.success("Product Added Successfullly!");
-          }
-          if (isError) {
+        }
+        if (isSuccess && updatedProduct) {
+            toast.success("Product Updated Successfully!")
+            navigate("/admin/list-product")
+        }
+        if (isError) {
             toast.error("Something Went Wrong!");
-          }
+        }
 
-    },[isSuccess, isError, isLoading]);
-    
+    }, [isSuccess, isError, isLoading]);
+
     const img = [];
     imgState.forEach(i => {
         img.push({
@@ -62,16 +91,17 @@ const Addproduct = () => {
             url: i.url,
         })
     });
-
+    
 
     useEffect(() => {
-        
+
         formik.values.images = img;
-    }, [ img])
+    }, [img])
 
     const formik = useFormik({
+        
         initialValues: {
-            title: "",
+            title:  "",
             description: "",
             price: "",
             brand: "",
@@ -82,24 +112,29 @@ const Addproduct = () => {
         },
         validationSchema: schema,
         onSubmit: (values) => {
-            
-            dispatch(createProducts(values));
-            formik.resetForm();
-            
-            setTimeout(() => {
+            if (getProductId !== undefined) {
+                const data = { id: getProductId, productData: values }
+                dispatch(updateAProduct(data));
                 dispatch(resetState());
-                navigate("/admin/list-product");
-              }, 3000);
+            } else {
+                dispatch(createProducts(values));
+                formik.resetForm();
+
+                setTimeout(() => {
+                    dispatch(resetState());
+                    navigate("/admin/list-product");
+                }, 3000);
+            }
         },
     });
-    
+
     const [desc, setDesc] = useState();
     const handleDesc = (e) => {
         setDesc(e);
     };
     return (
         <div>
-            <h3 className="mb-4 title">Add Product</h3>
+            <h3 className="mb-4 title">{getProductId !== undefined ? "Edit" : "Add"} Product</h3>
             <div>
                 <form onSubmit={formik.handleSubmit} className="d-flex gap-3 flex-column">
                     <CustomInput
@@ -200,7 +235,7 @@ const Addproduct = () => {
                         {formik.touched.tags && formik.errors.tags}
                     </div>
 
-                     
+
                     <CustomInput
                         type="number"
                         label="Enter Product Quantity"
@@ -248,7 +283,7 @@ const Addproduct = () => {
                         className="btn btn-success border-0 rounded-3 my-5"
                         type="submit"
                     >
-                        Add Product
+                        {getProductId !== undefined ? "Edit" : "Add"} Product
                     </button>
                 </form>
             </div>

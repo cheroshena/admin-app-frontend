@@ -29,7 +29,7 @@ const Addblog = () => {
     const getBlogId = location.pathname.split("/")[3];
     const [images, setImages] = useState([]);
 
-    
+
 
     useEffect(() => {
         dispatch(resetState());
@@ -45,7 +45,7 @@ const Addblog = () => {
     useEffect(() => {
         if (getBlogId !== undefined) {
             dispatch(getABlog(getBlogId));
-img.push(blogImages)
+            img.push(blogImages)
 
         } else {
             dispatch(resetState());
