@@ -27,6 +27,8 @@ import Adddoctor from './pages/Adddoctor';
 import AddCoupon from './pages/AddCoupon';
 import Couponlist from './pages/Couponlist';
 import ViewEnq from './pages/ViewEnq';
+import ViewOrder from './pages/ViewOrder';
+import ViewChannel from './pages/ViewChannel';
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
           <Route path='enquiries' element={<Enquiries/>} />
           <Route path='enquiries/:id' element={<ViewEnq/>} />
           <Route path='channel' element={<Channel/>} />
+          <Route path='channel/:id' element={<ViewChannel/>} />
           <Route path='prescription' element={<Prescription/>} />
           <Route path='blog-list' element={<Bloglist/>} />
           <Route path='blog' element={<Addblog/>} />
@@ -51,6 +54,7 @@ function App() {
           <Route path='blog-category' element={<Addblogcat/>} />
           <Route path='blog-category/:id' element={<Addblogcat/>} />
           <Route path='orders' element={<Orders/>} />
+          <Route path='order/:id' element={<ViewOrder/>} />
           <Route path='customers' element={<Customers/>} />
           <Route path='list-doctor' element={<Doctorlist/>} />
           <Route path='doctor' element={<Adddoctor/>} />
