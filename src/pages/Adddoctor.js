@@ -88,7 +88,7 @@ const Adddoctor = () => {
             setTimeout(() => {
                 dispatch(resetState());
                 navigate("/admin/list-doctor");
-            }, 3000);
+            }, 30000);
         },
     });
 
