@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
-import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { getOrder, getOrderByUser, getOrders } from "../features/auth/authSlice";
 
 const columns = [
     {
@@ -32,42 +32,30 @@ const columns = [
         dataIndex: "date",
     },
 
-    {
-        title: "Action",
-        dataIndex: "action",
-    },
+    
 ];
 
 
 const ViewOrder = () => {
     const location = useLocation();
-    const userId = location.pathname.split("/")[3];
+    const orderId = location.pathname.split("/")[3];
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getOrderByUser(userId));
+        dispatch(getOrder(orderId));
     }, []);
-    const orderState = useSelector((state) => state.auth.orderbyuser?.products);
+    const orderState = useSelector((state) => state?.auth?.singleOrder?.orders);
     console.log(orderState);
 
     const data1 = [];
-    for (let i = 0; i < orderState?.length; i++) {
+    for (let i = 0; i < orderState?.orderItems?.length; i++) {
         data1.push({
             key: i + 1,
-            name: orderState[i].product.title,
-            count: orderState[i].count,
-            amount: orderState[i].product.price,
-            brand: orderState[i].product.brand,
-            date:  orderState[i].product.createdAt,
-            action: (
-                <>
-                    <Link to="/" className=" fs-3 text-danger">
-                        <BiEdit />
-                    </Link>
-                    <Link className="ms-3 fs-3 text-danger" to="/">
-                        <AiFillDelete />
-                    </Link>
-                </>
-            ),
+            name: orderState?.orderItems[i]?.product?.title,
+            count: orderState?.orderItems[i]?.quantity,
+            amount: orderState?.orderItems[i]?.product?.price,
+            brand: orderState?.orderItems[i]?.product?.brand,
+            date:  orderState?.orderItems[i]?.product?.createdAt,
+            
         });
     }
     return (

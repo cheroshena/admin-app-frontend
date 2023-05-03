@@ -29,21 +29,42 @@ const getChannels = async () => {
 
 //get single order
 const getOrder = async (id) => {
-    const response = await axios.post(
-        `${base_url}user/getorderbyuser/${id}`,
-        "",
+    const response = await axios.get(
+        `${base_url}user/getaOrder/${id}`,
+   
         config
     );
 
     return response.data;
 };
 
+/////////////////////////////update single order status
+const updateOrder = async (data) => {
+    const response = await axios.put(
+        `${base_url}user/updateOrder/${data.id}`,{status:data.status},
+   
+        config
+    );
+
+    return response.data;
+};
 
 //get single channel
 const getChannel = async (id) => {
-    const response = await axios.post(
-        `${base_url}user/getchannelbyuser/${id}`,
-        "",
+    const response = await axios.get(
+        `${base_url}user/getaChannel/${id}`,
+    
+        config
+    );
+
+    return response.data;
+};
+
+/////////////////////////////////////update single channel
+const updateChannel = async (data) => {
+    const response = await axios.put(
+        `${base_url}user/updateChannel/${data.id}`,{status:data.status},
+    
         config
     );
 
@@ -79,6 +100,8 @@ const authService = {
     getChannel,
     getMonthlyOrders,
     getYearlyStats,
+    updateOrder,
+    updateChannel,
 }
 
 export default authService;

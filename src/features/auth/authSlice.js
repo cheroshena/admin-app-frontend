@@ -66,7 +66,7 @@ export const getOrders = createAsyncThunk(
 );
 
 //get order by user
-export const getOrderByUser = createAsyncThunk(
+export const getOrder = createAsyncThunk(
     "order/get-order",
     async (id, thunkAPI) => {
         try {
@@ -77,8 +77,32 @@ export const getOrderByUser = createAsyncThunk(
     }
 );
 
+//Update order
+export const updateAOrder = createAsyncThunk(
+    "order/update-order",
+    async (data, thunkAPI) => {
+        try {
+            return await authService.updateOrder(data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+//update channel
+export const updateAChannel = createAsyncThunk(
+    "order/update-channel",
+    async (data, thunkAPI) => {
+        try {
+            return await authService.updateChannel(data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 //get channel by user
-export const getChannelByUser = createAsyncThunk(
+export const getChannel = createAsyncThunk(
     "channel/get-channel",
     async (id, thunkAPI) => {
         try {
@@ -155,33 +179,33 @@ export const authSlice = createSlice({
                 state.message = action.error;
                 state.isLoading = false;
             })
-            .addCase(getOrderByUser.pending, (state) => {
+            .addCase(getOrder.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getOrderByUser.fulfilled, (state, action) => {
+            .addCase(getOrder.fulfilled, (state, action) => {
                 state.isError = false;
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orderbyuser = action.payload;
+                state.singleOrder = action.payload;
                 state.message = "success";
             })
-            .addCase(getOrderByUser.rejected, (state, action) => {
+            .addCase(getOrder.rejected, (state, action) => {
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
                 state.isLoading = false;
             })
-            .addCase(getChannelByUser.pending, (state) => {
+            .addCase(getChannel.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getChannelByUser.fulfilled, (state, action) => {
+            .addCase(getChannel.fulfilled, (state, action) => {
                 state.isError = false;
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orderbyuser = action.payload;
+                state.singleChannel = action.payload;
                 state.message = "success";
             })
-            .addCase(getChannelByUser.rejected, (state, action) => {
+            .addCase(getChannel.rejected, (state, action) => {
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
@@ -214,6 +238,38 @@ export const authSlice = createSlice({
                 state.message = "success";
             })
             .addCase(getYearlyData.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(updateAOrder.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateAOrder.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.yearlyData = action.payload;
+                state.message = "success";
+            })
+            .addCase(updateAOrder.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(updateAChannel.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateAChannel.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.yearlyData = action.payload;
+                state.message = "success";
+            })
+            .addCase(updateAChannel.rejected, (state, action) => {
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
