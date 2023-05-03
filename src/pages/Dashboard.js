@@ -3,7 +3,7 @@ import { Column } from "@ant-design/plots";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getMonthlyData, getYearlyData } from "../features/auth/authSlice";
+import { getMonthlyData, getOrderByUser, getOrders, getYearlyData } from "../features/auth/authSlice";
 
 const columns = [
   {
@@ -11,43 +11,44 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Customer",
     dataIndex: "name",
   },
+  
   {
-    title: "Product",
+    title: "Product Count",
     dataIndex: "product",
   },
   {
+    title: "Total Price",
+    dataIndex:"price",
+  },
+  {
     title: "Status",
-    dataIndex: "staus",
+    dataIndex: "status",
   },
 ];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-  data1.push({
-    key: i,
-    name: `Edward King ${i}`,
-    product: 32,
-    staus: `London, Park Lane no. ${i}`,
-  });
-}
+
 const Dashboard = () => {
 
   const dispatch = useDispatch()
   const monthlyDataState = useSelector(state => state?.auth?.monthlyData)
   const yearlyDataState = useSelector(state => state?.auth?.yearlyData)
-  const [dataMonthly,setDataMonthly] = useState([])
-  const [dataMonthlySales,setDataMonthlySales] = useState([])
+  const orderState = useSelector(state => state?.auth?.orders?.orders)
+  const [dataMonthly, setDataMonthly] = useState([])
+  const [dataMonthlySales, setDataMonthlySales] = useState([])
+  const [orderData,setOrderData]=useState([])
+  console.log(orderState);
   useEffect(() => {
     dispatch(getMonthlyData())
     dispatch(getYearlyData())
+    dispatch(getOrders())
   }, [])
 
   useEffect(() => {
     let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let data = []
-    let monthlyOrderCount=[]
+    let monthlyOrderCount = []
     for (let index = 0; index < monthlyDataState?.length; index++) {
       const element = monthlyDataState[index];
 
@@ -58,12 +59,24 @@ const Dashboard = () => {
     setDataMonthly(data)
     setDataMonthlySales(monthlyOrderCount)
 
+    const data1 = [];
+    for (let i = 1; i < orderState?.length; i++) {
+      data1.push({
+        key: i,
+        name: orderState?.[i]?.user?.email +"("+ orderState?.[i]?.user?.firstname+")",
+        product: orderState?.[i]?.orderItems?.length,
+        price: "Rs." +  orderState?.[i]?.totalPrice + ".00",
+        status: orderState?.[i]?.orderStatus,
+      });
+    }
+    setOrderData(data1)
+
   }, [monthlyDataState])
 
 
- 
+
   const config = {
-    data:dataMonthly,
+    data: dataMonthly,
     xField: "type",
     yField: "income",
     color: ({ type }) => {
@@ -92,7 +105,7 @@ const Dashboard = () => {
     },
   };
   const config2 = {
-    data:dataMonthlySales,
+    data: dataMonthlySales,
     xField: "type",
     yField: "sales",
     color: ({ type }) => {
@@ -130,7 +143,7 @@ const Dashboard = () => {
             <h4 className="mb-0 sub-title">Rs. {yearlyDataState?.[0]?.amount}</h4>
           </div>
           <div className="d-flex flex-column align-items-end">
-            
+
             <p className="mb-0  desc">Income in Last Year from Today</p>
           </div>
         </div>
@@ -140,31 +153,31 @@ const Dashboard = () => {
             <h4 className="mb-0 sub-title">{yearlyDataState?.[0]?.count}</h4>
           </div>
           <div className="d-flex flex-column align-items-end">
-            
+
             <p className="mb-0  desc">Sales in Last Year from Today</p>
           </div>
         </div>
-        
+
       </div>
       <div className="d-flex justify-content-between gap-3">
-      <div className="mt-4 flex-grow-1 w-50">
-        <h3 className="mb-5 title">Sales Statics</h3>
-        <div>
-          <Column {...config} />
+        <div className="mt-4 flex-grow-1 w-50">
+          <h3 className="mb-5 title">Sales Statics</h3>
+          <div>
+            <Column {...config} />
+          </div>
         </div>
-      </div>
-      <div className="mt-4 flex-grow-1 w-50">
-        <h3 className="mb-5 title">Income Statics</h3>
-        <div>
-          <Column {...config2} />
+        <div className="mt-4 flex-grow-1 w-50">
+          <h3 className="mb-5 title">Income Statics</h3>
+          <div>
+            <Column {...config2} />
+          </div>
         </div>
-      </div>
 
       </div>
       <div className="mt-4">
         <h3 className="mb-5 title">Recent Orders</h3>
         <div>
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={orderData} />
         </div>
       </div>
     </div>
