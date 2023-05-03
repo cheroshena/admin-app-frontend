@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
-
+//Token store in local storage
 const getUserfromLocalStorage = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
@@ -16,6 +16,8 @@ const initialState = {
     message: "",
 };
 
+
+//Admin login
 export const login = createAsyncThunk(
     'auth/admin-login',
     async (userData, thunkAPI) => {
@@ -27,6 +29,31 @@ export const login = createAsyncThunk(
         }
     });
 
+//graph chart get monthly data
+export const getMonthlyData = createAsyncThunk(
+    'orders/monthlydata',
+    async (thunkAPI) => {
+        try {
+            return await authService.getMonthlyOrders();
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    });
+
+//graph chart get monthly data
+export const getYearlyData = createAsyncThunk(
+    'orders/yearlydata',
+    async (thunkAPI) => {
+        try {
+            return await authService.getYearlyStats();
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    });
+
+//get all orders
 export const getOrders = createAsyncThunk(
     "order/get-orders",
     async (thunkAPI) => {
@@ -38,6 +65,7 @@ export const getOrders = createAsyncThunk(
     }
 );
 
+//get order by user
 export const getOrderByUser = createAsyncThunk(
     "order/get-order",
     async (id, thunkAPI) => {
@@ -49,6 +77,7 @@ export const getOrderByUser = createAsyncThunk(
     }
 );
 
+//get channel by user
 export const getChannelByUser = createAsyncThunk(
     "channel/get-channel",
     async (id, thunkAPI) => {
@@ -60,6 +89,7 @@ export const getChannelByUser = createAsyncThunk(
     }
 );
 
+//get al channels
 export const getChannels = createAsyncThunk(
     "channel/get-channels",
     async (thunkAPI) => {
@@ -152,6 +182,38 @@ export const authSlice = createSlice({
                 state.message = "success";
             })
             .addCase(getChannelByUser.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(getMonthlyData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getMonthlyData.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.monthlyData = action.payload;
+                state.message = "success";
+            })
+            .addCase(getMonthlyData.rejected, (state, action) => {
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+                state.isLoading = false;
+            })
+            .addCase(getYearlyData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getYearlyData.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.yearlyData = action.payload;
+                state.message = "success";
+            })
+            .addCase(getYearlyData.rejected, (state, action) => {
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
