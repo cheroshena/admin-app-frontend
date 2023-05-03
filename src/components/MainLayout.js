@@ -14,6 +14,8 @@ import { ImBlog } from "react-icons/im";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt } from "react-icons/bi";
+import { AiOutlineLogout } from "react-icons/ai";
+
 import { Layout, Menu, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
@@ -38,7 +40,9 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           onClick={({ key }) => {
-            if (key == "signout") {
+            if (key === "signout") {
+              localStorage.clear()
+              window.location.reload()
             } else {
               navigate(key);
             }
@@ -184,6 +188,11 @@ const MainLayout = () => {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
               label: "Enquiries",
+            },
+            {
+              key: "signout",
+              icon: <AiOutlineLogout className="fs-4" />,
+              label: "Sign Out",
             },
 
           ]}

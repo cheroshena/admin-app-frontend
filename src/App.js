@@ -29,15 +29,17 @@ import Couponlist from './pages/Couponlist';
 import ViewEnq from './pages/ViewEnq';
 import ViewOrder from './pages/ViewOrder';
 import ViewChannel from './pages/ViewChannel';
+import { PrivateRoutes } from './routing/PrivateRoutes';
+import { OpenRoutes } from './routing/OpenRoutes';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<OpenRoutes><Login /></OpenRoutes>} />
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
-        <Route path="/admin" element={<MainLayout />}>
+        <Route path="/admin" element={<PrivateRoutes><MainLayout /></PrivateRoutes>}>
           <Route index element={<Dashboard />} />
           <Route path='enquiries' element={<Enquiries/>} />
           <Route path='enquiries/:id' element={<ViewEnq/>} />
