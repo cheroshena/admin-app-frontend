@@ -28,10 +28,7 @@ const columns = [
     title: "Time Duration",
     dataIndex: "timeduration",
   },
-  {
-    title: "Description",
-    dataIndex: "discription",
-  },
+
   {
     title: "Experience",
     dataIndex: "expirience",

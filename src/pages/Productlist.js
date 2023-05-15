@@ -28,10 +28,7 @@ const columns = [
         title: "Rating",
         dataIndex: "totalrating",
     },
-    {
-        title: "Description",
-        dataIndex: "description",
-    },
+   
     {
         title: "Braand",
         dataIndex: "brand",
