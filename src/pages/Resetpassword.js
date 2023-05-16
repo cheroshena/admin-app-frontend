@@ -3,7 +3,7 @@ import CustomInput from '../components/CustomInput'
 
 const Resetpassword = () => {
   return (
-    <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
+    <div className="py-5" style={{ background: "linear-gradient(to right, rgb(95, 183, 218), rgb(250, 118, 255))", minHeight: "100vh" }}>
       <br />
       <br />
       <br />
@@ -16,7 +16,7 @@ const Resetpassword = () => {
         <form action="">
         <CustomInput type="password" label="New Password" id="pass" />
           <CustomInput type="password" label="Confirm Password" id="pass" />
-          <button className="border-0 px-3 py-2 text-white fw-bold w-100" type="submit" style={{ background: "#ffd333" }} >Reset</button>
+          <button className="border-0 px-3 py-2 text-white fw-bold w-100" type="submit" style={{ background: "linear-gradient(to right, rgb(95, 183, 218), rgb(250, 118, 255))" }} >Reset</button>
         </form>
       </div>
     </div>

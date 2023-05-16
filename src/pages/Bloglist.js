@@ -16,10 +16,7 @@ const columns = [
         title: " Title",
         dataIndex: "title",
     },
-    {
-        title: " Description",
-        dataIndex: "description",
-    },
+  
     {
         title: " Views",
         dataIndex: "numViews",

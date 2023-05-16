@@ -80,7 +80,7 @@ const Dashboard = () => {
     xField: "type",
     yField: "income",
     color: ({ type }) => {
-      return "#ffd333";
+      return "#B964FF";
     },
     label: {
       position: "middle",
@@ -109,12 +109,12 @@ const Dashboard = () => {
     xField: "type",
     yField: "sales",
     color: ({ type }) => {
-      return "#ffd333";
+      return "#B964FF";
     },
     label: {
       position: "middle",
       style: {
-        fill: "#FFFFFF",
+        background: "#FFFFFF",
         opacity: 1,
       },
     },

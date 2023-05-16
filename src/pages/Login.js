@@ -40,7 +40,7 @@ const Login = () => {
     }
   }, [user, isLoading, isError, isSuccess]);
   return (
-    <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
+    <div className="login-background py-5" style={{ background: "linear-gradient(to right, rgb(95, 183, 218), rgb(250, 118, 255))", minHeight: "100vh" }}>
       <br />
       <br />
       <br />
@@ -92,7 +92,7 @@ const Login = () => {
 
             className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5"
             type="submit"
-            style={{ background: "#ffd333" }} >
+            style={{ background: "linear-gradient(to right, rgb(95, 183, 218), rgb(250, 118, 255))" }} >
             Login
           </button >
         </form>

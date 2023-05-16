@@ -17,7 +17,7 @@ body{
 .logo {
   height: 32px;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to right, rgb(95, 183, 218), rgb(250, 118, 255));
 }
 
 .ant-layout {
