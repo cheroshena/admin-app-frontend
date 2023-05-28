@@ -161,13 +161,13 @@ const Dashboard = () => {
       </div>
       <div className="d-flex justify-content-between gap-3">
         <div className="mt-4 flex-grow-1 w-50">
-          <h3 className="mb-5 title">Sales Statics</h3>
+          <h3 className="mb-5 title">Income Statics</h3>
           <div>
             <Column {...config} />
           </div>
         </div>
         <div className="mt-4 flex-grow-1 w-50">
-          <h3 className="mb-5 title">Income Statics</h3>
+          <h3 className="mb-5 title">Sales Statics</h3>
           <div>
             <Column {...config2} />
           </div>
